@@ -115,6 +115,84 @@ class RecipeController {
     }
   }
 
+  * edit (request, response) {
+    const categories = yield Category.all()
+    const recipeId = request.param('id');
+    const recipe = yield Recipe.find(recipeId);
+    yield response.sendView('recipe_edit', { categories: categories.toJSON(), recipe: recipe.toJSON() })
+  }
+
+  /**
+   *
+   */
+  * doEdit (request, response) {
+    const recipeData = request.all()
+    const validation = yield Validator.validateAll(recipeData, {
+      name: 'required',
+      description: 'required',
+      ingredients: 'required'
+    })
+
+    if (validation.fails()) {
+      yield request
+        .withAll()
+        .andWith({ errors: validation.messages() })
+        .flash()
+
+      response.route('recipe_edit', {id : recipe.id})
+    } else {
+      const category = yield Category.find(recipeData.category)
+
+      if (!category) {
+        yield request
+          .withAll()
+          .andWith({ errors: [{ message: 'category doesn\'t exist' }] })
+          .flash()
+
+        response.route('recipe_edit', {id : recipe.id})
+      } else {
+        const recipeImage = request.file('image', { maxSize: '1mb', allowedExtensions: ['jpg', 'JPG'] })
+
+        if (recipeImage.clientSize() > 0 && !recipeImage.validate()) {
+          yield request
+            .withAll()
+            .andWith({ errors: [{ message: recipeImage.errors() }] })
+            .flash()
+
+          response.route('recipe_edit', {id : recipe.id})
+          return
+        }
+
+        const recipeId = request.param('id');
+        const recipe = yield Recipe.find(recipeId);
+
+        recipe.name = recipeData.name
+        recipe.description = recipeData.description
+        recipe.ingredients = recipeData.ingredients
+        recipe.category_id = recipeData.category
+        recipe.created_by_id = 1 // TODO: Replace
+
+        // TODO: these lines should be executed atomically
+        yield recipe.update()
+        yield recipeImage.move(Helpers.publicPath() + '/images', `${recipe.id}.jpg`)
+
+        //response.route('recipe', {id : recipe.id});
+        response.route('main');
+      }
+    }
+  }
+
+   * doDelete (request, response) {
+
+    const recipeId = request.param('id');
+    const recipe = yield Recipe.find(recipeId);
+
+    yield recipe.delete();
+
+    yield response.route('main')
+  }
+
+
 }
 
 function fileExists(fileName) {

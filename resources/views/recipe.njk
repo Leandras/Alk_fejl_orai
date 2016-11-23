@@ -11,4 +11,16 @@
   <pre>{{ recipe.ingredients }}</pre>
   <h2>Leírás</h2>
   <p>{{ recipe.description }}</p>
+  <div>
+    <a
+      class= "btn btn-primary"
+      href= "{{ 'recipe_edit'  | route({ id: recipe.id }) }}">
+      Módosítás
+      </a>
+      <a
+      class= "btn btn-warning"
+      href= "{{ 'recipe_delete'  | route({ id: recipe.id }) }}">
+      Törlés
+      </a>
+  </div>
 {% endblock %}

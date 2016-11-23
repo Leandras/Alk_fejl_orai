@@ -1,4 +1,11 @@
+
+
 {% extends 'master' %}
+
+{% block scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+  <script src="/scripts/smart-ingredient.js"></script>
+{% endblock %}
 
 {% block title %}Recept beküldése{% endblock %}
 {% block content %}
@@ -14,18 +21,20 @@
   {% endif %}
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <form class="form-horizontal" action="{{ 'do_recipe_create' | route }}" method="POST" enctype="multipart/form-data">
+      <form class="form-horizontal" action="{{ 'do_recipe_create' | route }}" method="POST" enctype="multipart/form-data" data-toggle="validator">
         {{ csrfField }}
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <label for="inputName" class="col-sm-4 control-label">Recept neve</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputName" name="name" placeholder="Recept neve" value="{{ old('name') }}">
+            <input type="text" class="form-control" id="inputName" name="name" placeholder="Recept neve" value="{{ old('name') }}" required>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <label for="inputCategory" class="col-sm-4 control-label">Kategória</label>
           <div class="col-sm-8">
-            <select id="inputCategory" class="form-control" name="category">
+            <select id="inputCategory" class="form-control" name="category" required>
               {% for category in categories %}
               {% if old('category') == category.id %}
               <option value="{{ category.id }}" selected>{{ category.name }}</option>
@@ -34,27 +43,49 @@
               {% endif %}
               {% endfor %}
             </select>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <label for="inputIngredients" class="col-sm-4 control-label">Hozzávalók</label>
           <div class="col-sm-8">
-            <textarea id="inputIngredients" class="form-control" name="ingredients">{{ old('ingredients') }}</textarea>
+             <div class="form-group smart-ingredient">
+              <div class="col-md-3">
+                  <input class="form-control smart-ingredient-amount" value="1csipet" type="text">
+              </div>
+              <div class="col-md-7">
+                  <input class="form-control smart-ingredient-name" value="só" type="text">
+              </div>
+              <div class="col-md-2">
+                  <button type="button" class="btn btn-danger btn-block">
+                      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                  </button>
+              </div>
+          </div>
+            <textarea id="inputIngredients" class="form-control" name="ingredients" required>{{ old('ingredients') }}</textarea>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+           <button type="button" class="btn btn-success btn-block">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+          </button>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <label for="inputDescription" class="col-sm-4 control-label">Leírás</label>
           <div class="col-sm-8">
-            <textarea id="inputDescription" class="form-control" name="description">{{ old('description') }}</textarea>
+            <textarea id="inputDescription" class="form-control" name="description" required>{{ old('description') }}</textarea>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <label for="inputImage" class="col-sm-4 control-label">Recept képe</label>
           <div class="col-sm-8">
-            <input type="file" id="inputImage" name="image">
+            <input type="file" id="inputImage" name="image" >
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
           <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-success">Recept beküldése</button>
           </div>

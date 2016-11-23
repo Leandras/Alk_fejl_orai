@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:3333/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+      <script src="./Kezdőlap - Receptkönyv_files/valami.js.letöltés"></script>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Kezdőlap - Receptkönyv</title>
+    <link rel="icon" href="http://localhost:3333/favicon.png" type="image/x-icon">
+    <link href="./Kezdőlap - Receptkönyv_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-G3G7OsJCbOk1USkOY4RfeX1z27YaWrZ1YuaQ5tbuawed9IoreRDpWpTkZLXQfPm3" crossorigin="anonymous">
+    <link href="./Kezdőlap - Receptkönyv_files/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://localhost:3333/">Receptkönyv</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="http://localhost:3333/recipe/create">Recept beküldése</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://localhost:3333/login">Belépés</a></li>
+            <li><a href="http://localhost:3333/register">Regisztráció</a></li>
+            </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="app-container">
+      <div class="container">
+        
+  <form action="http://localhost:3333/recipe" method="GET">
+    <div class="input-group search-box">
+      <input type="text" class="form-control" placeholder="Keresés..." name="recipeName">
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="submit">Mehet!</button>
+      </span>
+    </div>
+  </form>
+  
+  <div class="row">
+    
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Főételek
+          <a href="http://localhost:3333/recipe?category=2" class="btn btn-warning btn-xs pull-right">Összes megtekintése</a>
+        </div>
+        <div class="list-group">
+          
+          <a href="http://localhost:3333/recipe/3" class="list-group-item">Cordon bleu burgonyapürével </a>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Pizzák
+          <a href="http://localhost:3333/recipe?category=3" class="btn btn-warning btn-xs pull-right">Összes megtekintése</a>
+        </div>
+        <div class="list-group">
+          
+          <a href="http://localhost:3333/recipe/10" class="list-group-item">Sole pizza</a>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Főzelékek
+          <a href="http://localhost:3333/recipe?category=5" class="btn btn-warning btn-xs pull-right">Összes megtekintése</a>
+        </div>
+        <div class="list-group">
+          
+          <a href="http://localhost:3333/recipe/8" class="list-group-item">Zöldbabfőzelék</a>
+          
+          <a href="http://localhost:3333/recipe/6" class="list-group-item">Borsófőzelék</a>
+          
+          <a href="http://localhost:3333/recipe/1" class="list-group-item">Tökfőzelék</a>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="row">
+    
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Desszertek
+          <a href="http://localhost:3333/recipe?category=6" class="btn btn-warning btn-xs pull-right">Összes megtekintése</a>
+        </div>
+        <div class="list-group">
+          
+          <a href="http://localhost:3333/recipe/5" class="list-group-item">Dobostorta</a>
+          
+          <a href="http://localhost:3333/recipe/4" class="list-group-item">Madártej keceliesen</a>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+
+      </div>
+    </div>
+    <script src="./Kezdőlap - Receptkönyv_files/jquery-3.1.1.min.js.letöltés" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="./Kezdőlap - Receptkönyv_files/bootstrap.min.js.letöltés" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+
+</body></html>
