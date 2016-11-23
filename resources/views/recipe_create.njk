@@ -62,13 +62,16 @@
                       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                   </button>
               </div>
+              
           </div>
             <textarea id="inputIngredients" class="form-control" name="ingredients" required>{{ old('ingredients') }}</textarea>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
+            <!--
            <button type="button" class="btn btn-success btn-block">
             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
           </button>
+          -->
           </div>
         </div>
         <div class="form-group has-feedback">
@@ -87,7 +90,7 @@
         </div>
         <div class="form-group has-feedback">
           <div class="col-sm-offset-4 col-sm-8">
-            <button type="submit" class="btn btn-success">Recept beküldése</button>
+            <button id="btnSendRecipe" type="submit" class="btn btn-success">Recept beküldése</button>
           </div>
         </div>
       </form>
