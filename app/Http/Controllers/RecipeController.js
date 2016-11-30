@@ -11,6 +11,39 @@ class RecipeController {
   /**
    *
    */
+
+ 
+  * index (request, response) {
+    const page = Math.max(1, request.input('p'))
+    const filters = {
+      recipeName: request.input('recipeName') || '',
+      category: request.input('category') || 0,
+      createdBy: request.input('createdBy') || 0
+    }
+
+    const recipes = yield Recipe.query()
+      .active()
+      .where(function () {
+        if (filters.category > 0) this.where('category_id', filters.category)
+        if (filters.createdBy > 0) this.where('created_by_id', filters.createdBy)
+        if (filters.recipeName.length > 0) this.where('name', 'LIKE', `%${filters.recipeName}%`)
+      })
+      .with('created_by')
+      .paginate(page, 9)
+
+    const categories = yield Category.all()
+    const users = yield User.all()
+
+    yield response.sendView('recipes', {
+      recipes: recipes.toJSON(),
+      categories: categories.toJSON(),
+      users: users.toJSON(),
+      filters
+    })
+  }
+
+
+  
   * main (request, response) {
     // load all categories
     const categories = yield Category.all()
@@ -41,6 +74,7 @@ class RecipeController {
    *
    */
   * doCreate (request, response) {
+    console.log("doCreate");
     const recipeData = request.all()
     const validation = yield Validator.validateAll(recipeData, {
       name: 'required',
@@ -83,7 +117,7 @@ class RecipeController {
         recipe.description = recipeData.description
         recipe.ingredients = recipeData.ingredients
         recipe.category_id = recipeData.category
-        recipe.created_by_id = 1 // TODO: Replace
+        recipe.created_by_id = request.currentUser.id
 
         // TODO: these lines should be executed atomically
         yield recipe.save()
@@ -184,12 +218,41 @@ class RecipeController {
 
    * doDelete (request, response) {
 
-    const recipeId = request.param('id');
-    const recipe = yield Recipe.find(recipeId);
+    const recipeId = request.param('id')
+    const recipe = yield Recipe.find(recipeId)
 
-    yield recipe.delete();
+    if (recipe) {
+      if (recipe.created_by_id !== request.currentUser.id) {
+        response.unauthorized('Access denied.')
+      }
 
-    yield response.route('main')
+      recipe.deleted = true
+      yield recipe.update()
+
+      response.route('main')
+    } else {
+      response.notFound('Recipe not found.')
+    }
+  }
+
+  * ajaxDelete(request, response){
+      const recipeId = request.param('id')
+      const recipe = yield Recipe.find(recipeId)
+
+      if (recipe) {
+        if (recipe.created_by_id !== request.currentUser.id) {
+          response.unauthorized('Access denied.')
+        }
+
+        recipe.deleted = true
+        yield recipe.update()
+
+        response.ok({
+          success: true
+        });
+      } else {
+        response.notFound('Recipe not found.')
+      }
   }
 
 

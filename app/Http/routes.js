@@ -32,3 +32,7 @@ Route.get('/register', 'UserController.register').as('register')
 Route.post('/register', 'UserController.doRegister').as('do_register')
 Route.get('/logout', 'UserController.doLogout').as('do_logout').middleware('auth')
 
+Route.group('ajax', function () {
+  Route.delete('/recipe/:id/delete', 'RecipeController.ajaxDelete').middleware('auth')
+}).prefix('/ajax')
+

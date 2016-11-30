@@ -1,5 +1,9 @@
 {% extends 'master' %}
 
+{% block scripts %}
+  <script src="/scripts/recipe_delete.js"></script>
+{% endblock %}
+
 {% block title %}{{ recipe.name }}{% endblock %}
 {% block content %}
   <h1>{{ recipe.name }}</h1>
@@ -12,15 +16,24 @@
   <h2>Leírás</h2>
   <p>{{ recipe.description }}</p>
   <div>
-    <a
-      class= "btn btn-primary"
-      href= "{{ 'recipe_edit'  | route({ id: recipe.id }) }}">
-      Módosítás
-      </a>
-      <a
-      class= "btn btn-warning"
-      href= "{{ 'recipe_delete'  | route({ id: recipe.id }) }}">
-      Törlés
-      </a>
+    {{ csrfField | safe }}
+    <span class="help-block"></span>
+    <input type="hidden" id="recipeId" value="{{ recipe.id }}">
+    <a class= "btn btn-primary" href= "{{ 'recipe_edit'  | route({ id: recipe.id }) }}">Módosítás</a>
+    <a id="deleteRecipe" class= "btn btn-warning" href= "{{ 'recipe_delete'  | route({ id: recipe.id }) }}">Törlés</a>
+  </div>
+  <div class="modal fade confirm-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+        <div class="modal-body">
+            Biztosan törölni szeretnéd?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success modal-ok" data-dismiss="modal">OK</button>
+            <button type="button" class="btn btn-danger modal-cancel" data-dismiss="modal">Mégse</button>
+        </div>
+        </div>
+    </div>
   </div>
 {% endblock %}
+
